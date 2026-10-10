@@ -169,9 +169,9 @@ export default function Home() {
           </header>
 
           {/* HERO MAIN BODY */}
-          <section className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-12 md:px-16 flex-1 flex flex-col justify-between pt-8 pb-8">
+          <section className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-12 md:px-16 flex-1 flex flex-col justify-center py-8">
             
-            {/* Top/Mid: Headline */}
+            {/* Left Headline */}
             <div className="max-w-3xl pt-2 sm:pt-6">
               <span className="font-meta text-[#8FA39B] text-xs uppercase tracking-wider mb-4 block">
                 Digital studio & engineering
@@ -181,33 +181,6 @@ export default function Home() {
                 We build web, AI and search systems.{' '}
                 <span className="text-[#8FA39B]">Quietly, and properly.</span>
               </h1>
-            </div>
-
-            {/* Bottom Row: Bottom-Right Studio Note & CTA */}
-            <div className="w-full flex flex-col sm:flex-row items-end justify-between gap-6 pt-12">
-              <div className="hidden sm:block">
-                <span className="font-serif font-light text-2xl text-[#E3E6E1]/20 tracking-tight">
-                  DreamFrame
-                </span>
-              </div>
-
-              {/* Bottom Right Corner */}
-              <div className="flex flex-col items-start sm:items-end text-left sm:text-right max-w-[34ch] space-y-3">
-                <p className="font-body text-[#E3E6E1]/75 text-xs sm:text-[13px] font-normal leading-relaxed">
-                  DreamFrame is an independent studio. We design high-conversion
-                  websites, automate backend operations, and build search visibility
-                  for brands that want to be remembered.
-                </p>
-
-                <div>
-                  <button
-                    onClick={() => setIsGeneratorOpen(true)}
-                    className="h-9 px-4 inline-flex items-center justify-center font-sans text-xs font-medium text-[#0A1411] bg-[#E3E6E1] hover:bg-white rounded-full transition-all duration-200 cursor-pointer shadow-sm"
-                  >
-                    Start a project
-                  </button>
-                </div>
-              </div>
             </div>
 
           </section>
