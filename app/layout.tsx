@@ -1,27 +1,27 @@
 import type { Metadata } from 'next';
-import { Newsreader, Schibsted_Grotesk, DM_Mono } from 'next/font/google';
+import { Playfair_Display, Geist, DM_Mono } from 'next/font/google';
 import './globals.css';
 import SmoothScrollProvider from '@/components/SmoothScrollProvider';
 
-const newsreader = Newsreader({
+const playfair = Playfair_Display({
   subsets: ['latin'],
-  weight: ['300', '400', '500'],
+  weight: ['400', '500', '600', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-newsreader',
+  variable: '--font-display',
   display: 'swap',
 });
 
-const schibstedGrotesk = Schibsted_Grotesk({
+const geist = Geist({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
-  variable: '--font-schibsted',
+  variable: '--font-sans',
   display: 'swap',
 });
 
 const dmMono = DM_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],
-  variable: '--font-dm-mono',
+  variable: '--font-mono',
   display: 'swap',
 });
 
@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${newsreader.variable} ${schibstedGrotesk.variable} ${dmMono.variable}`}
+      className={`${playfair.variable} ${geist.variable} ${dmMono.variable}`}
     >
       <body className="bg-[#0C1D19] text-[#E3E6E1] min-h-screen font-sans antialiased overflow-x-hidden selection:bg-[#F0B43A] selection:text-[#0A1411]">
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
