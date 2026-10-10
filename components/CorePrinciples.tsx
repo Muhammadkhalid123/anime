@@ -2,74 +2,65 @@
 
 import React from 'react';
 
-const PRINCIPLES = [
+interface Principle {
+  statement: string;
+  support: string;
+}
+
+const PRINCIPLES: Principle[] = [
   {
-    number: '01',
-    title: 'THINK DEEPLY',
-    subtitle: 'Problem-First Engineering',
-    statement: 'We start with the core business and brand objective, not cookie-cutter templates. Every website, app, and AI pipeline is purpose-built to create unfair market advantage.',
+    statement: 'Start from the problem, not a template.',
+    support:
+      'Every system is designed from first principles to match your exact technical constraints and business goals.',
   },
   {
-    number: '02',
-    title: 'BUILD BOLDLY',
-    subtitle: 'Full-Stack Digital Mastery',
-    statement: 'We fuse high-end visual design with bulletproof web engineering, autonomous AI workflows, and advanced SEO/GEO/AEO engines that dominate search.',
+    statement: 'Design and engineering in one team.',
+    support:
+      'Zero handoff friction between visual concepts and production code. We architect and build what we design.',
   },
   {
-    number: '03',
-    title: 'MOVE FAST',
-    subtitle: 'Zero-Friction Execution',
-    statement: 'We prototype, engineer, and deploy production-ready digital solutions with intense velocity — taking your brand from concept to exponential scale.',
+    statement: 'Ship fast, then keep improving.',
+    support:
+      'Get robust software into real users’ hands quickly, collect telemetry feedback, and iterate relentlessly.',
   },
 ];
 
 export default function CorePrinciples() {
   return (
-    <section className="relative z-20 w-full bg-[#050508] text-white py-28 sm:py-36 px-6 sm:px-12 md:px-16 lg:px-20 border-t border-white/[0.08] overflow-hidden select-none">
-      <div className="max-w-7xl mx-auto relative z-10">
+    <section className="relative w-full bg-[#0C1D19] text-[#E3E6E1] py-28 sm:py-36 border-b border-[rgba(227,230,225,0.08)]">
+      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-12 md:px-16">
         
         {/* Section Header */}
-        <div className="flex items-center gap-3 mb-12 sm:mb-16">
-          <span className="text-xs font-mono font-medium text-[#ff5500] tracking-wider">
-            06
-          </span>
-          <span className="h-[1px] w-8 bg-white/20" />
-          <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
-            WHY US / CORE PRINCIPLES
-          </span>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-16 items-baseline">
+          <div className="md:col-span-3">
+            <span className="font-meta text-[#8FA39B] text-xs uppercase tracking-wider block">
+              Principles
+            </span>
+          </div>
+          <div className="md:col-span-9">
+            <p className="font-serif text-2xl sm:text-3xl text-[#8FA39B] font-light">
+              How we think and build.
+            </p>
+          </div>
         </div>
 
-        {/* 3 Core Principles — Editorial Layout with 3D Liquid Glassmorphism */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 text-left">
-          {PRINCIPLES.map((item) => (
+        {/* 3 Plain Rows with hairline dividers */}
+        <div className="w-full divide-y divide-[rgba(227,230,225,0.14)] border-y border-[rgba(227,230,225,0.14)]">
+          {PRINCIPLES.map((item, idx) => (
             <div
-              key={item.number}
-              className="group flex flex-col justify-between p-8 sm:p-9 rounded-[32px] liquid-glass-card transition-all duration-300 relative overflow-hidden min-h-[340px]"
+              key={idx}
+              className="py-10 sm:py-14 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 items-baseline"
             >
-              {/* Liquid Specular Diagonal Sheen */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.08] pointer-events-none rounded-[32px]" />
-
-              {/* Ambient purple liquid orb */}
-              <div className="absolute -top-12 -right-12 w-48 h-48 bg-radial from-[#8b5cf6]/18 via-transparent to-transparent blur-2xl pointer-events-none group-hover:scale-125 transition-transform duration-500" />
-
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-8">
-                  <span className="font-serif text-3xl sm:text-4xl text-white/25 group-hover:text-[#ff5500] transition-colors font-normal">
-                    {item.number}
-                  </span>
-                  <span className="text-[10px] uppercase font-mono tracking-widest text-[#ff6a1a] liquid-glass-pill px-3 py-1 rounded-full font-semibold">
-                    {item.subtitle}
-                  </span>
-                </div>
-
-                <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal tracking-tight mb-4 group-hover:text-[#E6DDF5] transition-colors">
-                  {item.title}
+              <div className="md:col-span-6">
+                <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-[#E3E6E1] leading-snug">
+                  {item.statement}
                 </h3>
               </div>
-
-              <p className="relative z-10 text-sm text-white/65 font-sans leading-relaxed mt-4">
-                {item.statement}
-              </p>
+              <div className="md:col-span-6">
+                <p className="font-body text-[#8FA39B] text-base sm:text-lg leading-relaxed max-w-[50ch]">
+                  {item.support}
+                </p>
+              </div>
             </div>
           ))}
         </div>

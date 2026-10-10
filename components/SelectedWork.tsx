@@ -1,162 +1,182 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import Image from 'next/image';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const PROJECTS = [
+interface Project {
+  title: string;
+  year: string;
+  tagline: string;
+  stack: string;
+  image: string;
+}
+
+const PROJECTS: Project[] = [
   {
-    id: '01',
-    title: 'AETHERIA — LUXURY SPATIAL COMMERCE & WEB APP',
-    category: 'DYNAMIC WEB APP & 3D WEBGL',
+    title: 'Aetheria',
     year: '2026',
-    resolution: 'NEXT.JS 15 • 3D WEBGL • STRIPE',
-    description: 'Dynamic web application with interactive 3D spatial configurator, real-time cart checkout, and generative design visualizer.',
-    imageSrc: '/services/web_apps.jpg',
-    featured: true,
+    tagline: 'Spatial commerce platform with a realtime 3D configurator.',
+    stack: 'Next.js · WebGL · Three.js · Stripe',
+    image: '/hero-techwear.jpg',
   },
   {
-    id: '02',
-    title: 'NEXUS PRO — AUTONOMOUS AI WORKFLOW SUITE',
-    category: 'AI SOLUTIONS & SAAS',
-    year: '2026',
-    resolution: 'CUSTOM LLM AGENTS • FASTAPI',
-    description: 'Autonomous multi-agent platform automating enterprise content generation, workflow orchestration, and customer intelligence.',
-    imageSrc: '/services/ai_automations.jpg',
-    featured: false,
+    title: 'Kinetix Systems',
+    year: '2025',
+    tagline: 'Autonomous operations and generative synthesis pipelines.',
+    stack: 'Python · LangChain · FastAPI · PostgreSQL',
+    image: '/services/ai_automations.jpg',
   },
   {
-    id: '03',
-    title: 'CHROMA STUDIO — BRAND IDENTITY & AEO GROWTH',
-    category: 'BRAND DESIGN & SEARCH DOMINANCE',
-    year: '2026',
-    resolution: '#1 GOOGLE SEO • PERPLEXITY AEO',
-    description: 'Complete visual branding, 3D motion graphics, and organic search optimization dominating both Google and generative AI engines.',
-    imageSrc: '/services/design_graphics.jpg',
-    featured: false,
+    title: 'Lumina Studios',
+    year: '2025',
+    tagline: 'Editorial brand identity system and AI search authority.',
+    stack: 'Design Systems · GEO / AEO · Next.js',
+    image: '/services/design_graphics.jpg',
   },
 ];
 
 export default function SelectedWork() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    const isMobile = window.innerWidth < 768;
+
+    if (prefersReducedMotion || isMobile || !sectionRef.current || !trackRef.current) {
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      const track = trackRef.current;
+      if (!track) return;
+
+      const scrollDistance = () => track.scrollWidth - window.innerWidth;
+
+      const reelTween = gsap.to(track, {
+        x: () => -scrollDistance(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          pin: true,
+          scrub: 0.6,
+          start: 'top top',
+          end: () => `+=${scrollDistance() + 200}`,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            if (progressBarRef.current) {
+              progressBarRef.current.style.transform = `scaleX(${self.progress})`;
+            }
+          },
+        },
+      });
+
+      // Clip path image reveals for each slide
+      const cards = track.querySelectorAll('.project-card');
+      cards.forEach((card) => {
+        const img = card.querySelector('.project-image-wrap');
+        if (img) {
+          gsap.fromTo(
+            img,
+            { clipPath: 'inset(0 100% 0 0)' },
+            {
+              clipPath: 'inset(0 0% 0 0)',
+              ease: 'power2.out',
+              duration: 1,
+              scrollTrigger: {
+                trigger: card,
+                containerAnimation: reelTween,
+                start: 'left 80%',
+                toggleActions: 'play none none reverse',
+              },
+            }
+          );
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative z-20 w-full bg-[#050508] text-white py-28 sm:py-36 px-6 sm:px-12 md:px-16 lg:px-20 border-t border-white/[0.08] overflow-hidden select-none">
-      {/* Ambient background aura */}
-      <div className="absolute top-1/4 left-1/4 w-[750px] h-[550px] bg-radial from-[#d946ef]/06 via-transparent to-transparent blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-[650px] h-[450px] bg-radial from-[#ff5500]/06 via-transparent to-transparent blur-3xl pointer-events-none" />
+    <section
+      ref={sectionRef}
+      className="relative w-full bg-[#E3E6E1] text-[#0A1411] overflow-hidden select-none border-b border-[rgba(10,20,17,0.14)]"
+    >
+      {/* Top Header inside Fog Section */}
+      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-12 md:px-16 pt-24 sm:pt-28 pb-12 flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+        <div>
+          <span className="font-meta text-[#0A1411]/60 text-xs uppercase tracking-wider block mb-2">
+            Selected Work
+          </span>
+          <h2 className="font-serif text-3xl sm:text-5xl font-light text-[#0A1411] tracking-[-0.02em]">
+            Recent studio productions
+          </h2>
+        </div>
+        <p className="font-meta text-[#0A1411]/60 text-xs sm:text-sm">
+          Scroll to explore projects
+        </p>
+      </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-20 gap-6">
-          <div className="text-left">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-mono font-medium text-[#ff5500] tracking-wider">
-                04
-              </span>
-              <span className="h-[1px] w-8 bg-white/20" />
-              <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
-                SELECTED WORK
+      {/* Horizontal Reel Track (Desktop) / Vertical Stack (Mobile) */}
+      <div
+        ref={trackRef}
+        className="flex flex-col md:flex-row md:w-max px-6 sm:px-12 md:px-16 pb-24 md:pb-32 gap-12 md:gap-16 items-start"
+      >
+        {PROJECTS.map((proj, idx) => (
+          <div
+            key={idx}
+            className="project-card w-full md:w-[75vw] max-w-[960px] flex-shrink-0 flex flex-col group"
+          >
+            {/* Project Header Row */}
+            <div className="flex items-baseline justify-between border-b border-[rgba(10,20,17,0.14)] pb-4 mb-6">
+              <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-[#0A1411]">
+                {proj.title}
+              </h3>
+              <span className="font-meta text-[#0A1411]/70 text-sm">
+                {proj.year}
               </span>
             </div>
-            <h2 className="font-serif font-normal text-[clamp(2.4rem,4.8vw,4.4rem)] leading-[0.98] text-white">
-              Curated{' '}
-              <span className="italic bg-gradient-to-r from-[#E6DDF5] via-[#D9CCF2] to-[#B79CFF] bg-clip-text text-transparent">
-                Productions
-              </span>
-            </h2>
-          </div>
 
-          <p className="text-xs sm:text-sm text-white/50 font-normal max-w-sm text-left md:text-right font-sans leading-relaxed">
-            Curated portfolio of dynamic web applications, bespoke brand graphics, custom AI architectures, and top-tier SEO, GEO, and AEO search successes.
-          </p>
-        </div>
-
-        {/* FEATURED HERO WORK (Large Single Masterpiece Showcase with 3D Liquid Glassmorphism) */}
-        <div className="group mb-12 sm:mb-16">
-          <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-[32px] overflow-hidden liquid-glass-card p-2 sm:p-3 shadow-[0_30px_90px_rgba(0,0,0,0.9)] border border-white/15">
-            {/* Liquid Specular Diagonal Sheen */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.08] pointer-events-none rounded-[32px]" />
-
-            <div className="relative w-full h-full rounded-[26px] overflow-hidden bg-black/50">
+            {/* 16:9 Project Image Frame */}
+            <div className="project-image-wrap relative w-full aspect-[16/9] bg-[#14302A] overflow-hidden mb-6 transition-all duration-500">
               <Image
-                src={PROJECTS[0].imageSrc}
-                alt={PROJECTS[0].title}
+                src={proj.image}
+                alt={proj.title}
                 fill
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-103"
+                className="object-cover group-hover:scale-103 transition-transform duration-700 ease-out"
+                sizes="(max-width: 768px) 100vw, 75vw"
+                priority={idx === 0}
               />
-              {/* Ambient vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none" />
+            </div>
 
-              {/* Top Badge */}
-              <div className="absolute top-6 left-6 sm:top-8 sm:left-8 liquid-glass-pill px-4 py-1.5 rounded-full backdrop-blur-xl">
-                <span className="text-[11px] font-mono font-medium text-[#ff6a1a] uppercase tracking-wider">
-                  {PROJECTS[0].category}
-                </span>
-              </div>
-
-              {/* Bottom Inset Caption */}
-              <div className="absolute bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-8 flex flex-col md:flex-row md:items-end justify-between gap-4 text-left">
-                <div>
-                  <h3 className="font-serif text-xl sm:text-2xl md:text-3xl text-white font-normal">
-                    {PROJECTS[0].title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-white/70 font-sans max-w-xl mt-1.5">
-                    {PROJECTS[0].description}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-4 shrink-0 font-mono text-xs text-white/60 liquid-glass-pill px-4 py-2 rounded-full">
-                  <span>{PROJECTS[0].year}</span>
-                  <span>•</span>
-                  <span className="text-emerald-400 font-semibold">{PROJECTS[0].resolution}</span>
-                </div>
-              </div>
+            {/* Project Description & Meta Footer */}
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4">
+              <p className="font-body text-[#0A1411]/85 text-base sm:text-lg font-normal max-w-[45ch]">
+                {proj.tagline}
+              </p>
+              <span className="font-meta text-[#0A1411]/60 text-xs sm:text-sm whitespace-nowrap">
+                {proj.stack}
+              </span>
             </div>
           </div>
-        </div>
+        ))}
+      </div>
 
-        {/* 2-COLUMN ASYMMETRIC GRID (Projects 02 and 03) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-          {PROJECTS.slice(1).map((proj) => (
-            <div key={proj.id} className="group flex flex-col text-left">
-              <div className="relative w-full aspect-[4/3] rounded-[32px] overflow-hidden liquid-glass-card p-2 sm:p-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-white/15 mb-5">
-                {/* Liquid Specular Diagonal Sheen */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.08] pointer-events-none rounded-[32px]" />
-
-                <div className="relative w-full h-full rounded-[24px] overflow-hidden bg-black/50">
-                  <Image
-                    src={proj.imageSrc}
-                    alt={proj.title}
-                    fill
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-                  
-                  <div className="absolute top-5 left-5 liquid-glass-pill px-3.5 py-1 rounded-full backdrop-blur-md">
-                    <span className="text-[10px] font-mono font-medium text-white/90 uppercase tracking-wider">
-                      {proj.category}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between px-1">
-                <h4 className="font-serif text-lg sm:text-xl text-white font-normal group-hover:text-[#E6DDF5] transition-colors">
-                  {proj.title}
-                </h4>
-                <span className="text-xs font-mono text-white/40">{proj.year}</span>
-              </div>
-
-              <p className="text-xs text-white/60 font-sans mt-2 leading-relaxed px-1">
-                {proj.description}
-              </p>
-
-              <div className="mt-3 text-[11px] font-mono text-[#ff6a1a] px-1 font-medium">
-                {proj.resolution}
-              </div>
-            </div>
-          ))}
-        </div>
-
+      {/* Saffron Progress Bar Indicator along bottom (Desktop) */}
+      <div className="hidden md:block absolute bottom-0 left-0 w-full h-[2px] bg-[rgba(10,20,17,0.1)]">
+        <div
+          ref={progressBarRef}
+          className="h-full bg-[#F0B43A] origin-left transition-transform duration-75"
+          style={{ transform: 'scaleX(0)' }}
+        />
       </div>
     </section>
   );

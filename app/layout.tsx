@@ -1,24 +1,34 @@
-import type { Metadata } from "next";
-import { Instrument_Sans, Instrument_Serif } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Newsreader, Schibsted_Grotesk, DM_Mono } from 'next/font/google';
+import './globals.css';
+import SmoothScrollProvider from '@/components/SmoothScrollProvider';
 
-const instrumentSans = Instrument_Sans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
+const newsreader = Newsreader({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  style: ['normal', 'italic'],
+  variable: '--font-newsreader',
+  display: 'swap',
 });
 
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  variable: "--font-serif-editorial",
-  weight: ["400"],
-  display: "swap",
+const schibstedGrotesk = Schibsted_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-schibsted',
+  display: 'swap',
+});
+
+const dmMono = DM_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-dm-mono',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "DREAMFRAME — Creative Agency, Web Apps, AI Solutions & Growth",
-  description: "Next-generation full-stack digital agency delivering design systems, dynamic web apps, autonomous AI solutions, brand graphics, and advanced SEO/GEO/AEO growth engines.",
+  title: 'DREAMFRAME — Digital Studio, Web, AI & Search',
+  description:
+    'We design and build websites, AI tools and search visibility for brands that want to be found and remembered.',
 };
 
 export default function RootLayout({
@@ -29,10 +39,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSans.variable} ${instrumentSerif.variable} dark`}
+      className={`${newsreader.variable} ${schibstedGrotesk.variable} ${dmMono.variable}`}
     >
-      <body className="bg-black text-[#ededed] min-h-screen font-sans selection:bg-[#ff5500]/30 selection:text-white antialiased overflow-x-hidden">
-        {children}
+      <body className="bg-[#0C1D19] text-[#E3E6E1] min-h-screen font-sans antialiased overflow-x-hidden selection:bg-[#F0B43A] selection:text-[#0A1411]">
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>
   );

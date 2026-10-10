@@ -2,151 +2,79 @@
 
 import React from 'react';
 
-interface SiteFooterProps {
-  onOpenStudio: () => void;
-}
-
-export default function SiteFooter({ onOpenStudio }: SiteFooterProps) {
+export default function SiteFooter({
+  onOpenStudio,
+}: {
+  onOpenStudio?: () => void;
+}) {
   return (
-    <footer className="relative z-20 w-full bg-black text-white pt-20 pb-12 px-6 sm:px-12 md:px-16 lg:px-20 border-t border-white/[0.08] select-none">
-      <div className="max-w-7xl mx-auto">
+    <footer className="relative w-full bg-[#0C1D19] text-[#E3E6E1] py-20 sm:py-24">
+      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-12 md:px-16">
         
-        {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-16 border-b border-white/[0.08] text-left">
+        {/* Top 3-Column Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-[rgba(227,230,225,0.1)]">
           
-          {/* Brand Info (5 Cols) */}
-          <div className="md:col-span-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6 rounded-full border border-[#ff5500] p-[1.5px] flex items-center justify-center shadow-[0_0_8px_rgba(255,85,0,0.35)]">
-                <div className="w-full h-full rounded-full flex items-center justify-center gap-[1.5px]">
-                  <span className="w-[1.5px] h-3 bg-[#ff5500] rounded-full" />
-                  <span className="w-[1.5px] h-3.5 bg-[#ff6a1a] rounded-full" />
-                  <span className="w-[1.5px] h-3 bg-[#ff5500] rounded-full" />
-                </div>
-              </div>
-              <span className="text-lg font-bold tracking-tight text-white font-sans">
-                DreamFrame
-              </span>
-            </div>
-
-            <p className="text-xs text-white/50 font-sans leading-relaxed max-w-sm">
-              Full-spectrum creative agency, dynamic web engineering studio, AI solutions architect, and search dominance powerhouse (SEO • GEO • AEO).
+          {/* Brand Col */}
+          <div className="md:col-span-4 space-y-4">
+            <span className="font-serif text-2xl font-normal text-[#E3E6E1]">
+              DreamFrame
+            </span>
+            <p className="font-body text-[#8FA39B] text-sm max-w-[32ch]">
+              Digital studio for bespoke web systems, autonomous AI tools, and
+              search visibility.
             </p>
-
-            <div className="pt-2 flex items-center gap-2 text-[11px] font-mono text-emerald-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Full Agency Pipeline Active • Ready for New Engagements</span>
-            </div>
           </div>
 
-          {/* Links Column 1: Capabilities (3 Cols) */}
-          <div className="md:col-span-3 space-y-3">
-            <div className="text-[11px] font-mono uppercase tracking-wider text-white/40">
-              Capabilities & Solutions
-            </div>
-            <ul className="space-y-2 text-xs font-sans text-white/70">
-              <li>
+          {/* Services Col */}
+          <div className="md:col-span-4 space-y-3">
+            <span className="font-meta text-[#8FA39B] text-xs uppercase tracking-wider block mb-2">
+              Capabilities
+            </span>
+            <ul className="space-y-2 text-sm text-[#E3E6E1]/80">
+              <li>Web & Software Platforms</li>
+              <li>Autonomous AI & Automation</li>
+              <li>Brand Identity & Motion</li>
+              <li>Generative Search (GEO & SEO)</li>
+            </ul>
+          </div>
+
+          {/* Contact Col */}
+          <div className="md:col-span-4 space-y-3">
+            <span className="font-meta text-[#8FA39B] text-xs uppercase tracking-wider block mb-2">
+              Inquiries
+            </span>
+            <div className="space-y-2 text-sm text-[#E3E6E1]/80">
+              <a
+                href="mailto:studio@dreamframe.agency"
+                className="hover:text-white transition-colors block"
+              >
+                studio@dreamframe.agency
+              </a>
+              <p className="text-[#8FA39B] text-xs">
+                Operating internationally with remote teams.
+              </p>
+              {onOpenStudio && (
                 <button
                   onClick={onOpenStudio}
-                  className="hover:text-white transition-colors cursor-pointer text-left"
+                  className="text-xs text-[#F0B43A] hover:underline pt-2 inline-block cursor-pointer"
                 >
-                  Start Project Consultation
+                  Start a project consultation →
                 </button>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-white transition-colors">
-                  Web Apps & Dynamic Sites
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-white transition-colors">
-                  Design Agency & All Graphics
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-white transition-colors">
-                  AI Solutions & Autonomous Workflows
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-white transition-colors">
-                  SEO, GEO & AEO Search Engine Domination
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-white transition-colors">
-                  Full 360° Growth Marketing
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Links Column 2: Resources (2 Cols) */}
-          <div className="md:col-span-2 space-y-3">
-            <div className="text-[11px] font-mono uppercase tracking-wider text-white/40">
-              Resources
+              )}
             </div>
-            <ul className="space-y-2 text-xs font-sans text-white/70">
-              <li>
-                <a href="#work" className="hover:text-white transition-colors">
-                  Selected Work
-                </a>
-              </li>
-              <li>
-                <a href="#process" className="hover:text-white transition-colors">
-                  Our 4-Stage Process
-                </a>
-              </li>
-              <li>
-                <a href="#philosophy" className="hover:text-white transition-colors">
-                  Technology Stack
-                </a>
-              </li>
-              <li>
-                <a href="#principles" className="hover:text-white transition-colors">
-                  Core Principles
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Links Column 3: Enterprise & Trust (2 Cols) */}
-          <div className="md:col-span-2 space-y-3">
-            <div className="text-[11px] font-mono uppercase tracking-wider text-white/40">
-              Enterprise & Locations
-            </div>
-            <ul className="space-y-2 text-xs font-sans text-white/70">
-              <li>
-                <a href="#privacy" className="hover:text-white transition-colors">
-                  Enterprise Security & SLA
-                </a>
-              </li>
-              <li>
-                <a href="#terms" className="hover:text-white transition-colors">
-                  Commercial Master Terms
-                </a>
-              </li>
-              <li>
-                <span className="text-[11px] text-white/40 font-mono block pt-1">
-                  New York • London • Tokyo
-                </span>
-              </li>
-            </ul>
           </div>
 
         </div>
 
-        {/* Bottom Strip */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-white/40">
-          <div>
-            © 2026 DREAMFRAME INC. FULL-SPECTRUM BRAND & DIGITAL SOLUTIONS.
-          </div>
-          <div className="flex items-center gap-6">
-            <span>INDEXING: 100% SEO/GEO</span>
-            <span>•</span>
-            <span>STACK: NEXT.JS 15</span>
-            <span>•</span>
-            <span className="text-white/60">STATUS: ACCEPTING CLIENTS</span>
+        {/* Bottom Bar */}
+        <div className="pt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <p className="font-meta text-[#8FA39B] text-xs">
+            © {new Date().getFullYear()} DreamFrame. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6 font-meta text-[#8FA39B] text-xs">
+            <span>Privacy</span>
+            <span>Terms</span>
+            <span>Index</span>
           </div>
         </div>
 
