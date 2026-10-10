@@ -1,26 +1,291 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-sans: var(--font-sans), 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Times New Roman', Times, var(--font-serif-editorial), 'Instrument Serif', Georgia, serif;
+  --font-display: 'Times New Roman', Times, var(--font-serif-editorial), Georgia, serif;
+  --font-editorial: 'Times New Roman', Times, var(--font-serif-editorial), Georgia, serif;
+  --color-brand-orange: #ff5500;
+  --color-brand-amber: #ff6a1a;
+  --color-lavender-pale: #E6DDF5;
+  --color-lavender-muted: #D9CCF2;
+  --color-violet-accent: #B79CFF;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  .font-editorial {
+    font-family: var(--font-serif);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  body {
+    background-color: #000000;
+    color: #e4e4e7;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+}
+
+/* Frosted glass wordmark utility fallback */
+.wordmark-glass {
+  color: rgba(255, 255, 255, 0.08);
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.55);
+  paint-order: stroke fill;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(255, 255, 255, 0.01) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 0 24px rgba(255, 255, 255, 0.08);
+}
+
+@media (min-width: 1440px) {
+  .wordmark-glass {
+    -webkit-text-stroke-width: 2px;
+  }
+}
+
+@media (max-width: 640px) {
+  .wordmark-glass {
+    -webkit-text-stroke-width: 1px;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .wordmark-glass {
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.85);
+  }
+}
+
+/* Staggered entrance animation */
+@keyframes fadeUpReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up-1 {
+  animation: fadeUpReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards;
+  opacity: 0;
+}
+
+.animate-fade-up-2 {
+  animation: fadeUpReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.16s forwards;
+  opacity: 0;
+}
+
+.animate-fade-up-3 {
+  animation: fadeUpReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.24s forwards;
+  opacity: 0;
+}
+
+.animate-fade-up-4 {
+  animation: fadeUpReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up-1,
+  .animate-fade-up-2,
+  .animate-fade-up-3,
+  .animate-fade-up-4 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Marquee infinite loops */
+@keyframes marqueeLeft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marqueeRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marqueeLeft 35s linear infinite;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marqueeRight 35s linear infinite;
+}
+
+.pause-on-hover:hover .animate-marquee-left,
+.pause-on-hover:hover .animate-marquee-right {
+  animation-play-state: paused;
+}
+
+/* Radar sweep rotation */
+@keyframes radarSweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar-sweep {
+  animation: radarSweep 4s linear infinite;
+  transform-origin: bottom center;
+}
+
+/* Pulse animation for radar blips */
+@keyframes blipPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.animate-blip {
+  animation: blipPulse 2s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   3D LIQUID GLASSMORPHISM STYLES & CAUSTIC SHINE
+───────────────────────────────────────────────────────────── */
+.liquid-glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(19, 19, 29, 0.72) 20%,
+    rgba(12, 12, 18, 0.88) 100%
+  );
+  backdrop-filter: blur(28px) saturate(160%) brightness(108%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%) brightness(108%);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 
+    0 30px 60px -15px rgba(0, 0, 0, 0.92),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.38),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.8),
+    inset 0 0 24px rgba(168, 85, 247, 0.05);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.liquid-glass-card:hover {
+  transform: translateY(-5px) scale(1.008);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(24, 24, 38, 0.78) 25%,
+    rgba(14, 14, 22, 0.92) 100%
+  );
+  border-color: rgba(216, 180, 254, 0.38);
+  box-shadow: 
+    0 35px 75px -15px rgba(0, 0, 0, 0.98),
+    0 0 50px -5px rgba(168, 85, 247, 0.28),
+    0 0 85px -15px rgba(217, 70, 239, 0.18),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.85);
+}
+
+/* Deep 3D Liquid Glass Container */
+.liquid-glass-deep {
+  background: radial-gradient(
+    circle at 30% 10%,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(18, 18, 28, 0.82) 40%,
+    rgba(8, 8, 14, 0.95) 100%
+  );
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 35px 70px -10px rgba(0, 0, 0, 0.95),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.85),
+    inset 0 0 30px rgba(255, 85, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.liquid-glass-deep:hover {
+  border-color: rgba(255, 85, 0, 0.35);
+  box-shadow: 
+    0 40px 80px -10px rgba(0, 0, 0, 0.98),
+    0 0 45px -5px rgba(255, 85, 0, 0.2),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.65);
+}
+
+/* 3D Glass Pill Button */
+.liquid-glass-pill {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(168, 85, 247, 0.08) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    0 8px 24px -4px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.5);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-glass-pill:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(168, 85, 247, 0.18) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 
+    0 12px 30px -4px rgba(168, 85, 247, 0.35),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.65);
+  transform: translateY(-1px);
+}
+
+/* 3D Beveled Acrylic Keycaps */
+.glass-keycap {
+  background: linear-gradient(145deg, rgba(35, 35, 50, 0.95) 0%, rgba(18, 18, 26, 0.98) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 
+    0 10px 20px -3px rgba(0, 0, 0, 0.7),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.8);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #202025;
+  border-radius: 9999px;
 }
