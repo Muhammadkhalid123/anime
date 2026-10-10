@@ -68,8 +68,8 @@ export default function Home() {
                 aria-label="Toggle navigation menu"
               >
                 {/* Minimal studio symbol */}
-                <div className="w-4 h-4 rounded-full border border-[#F0B43A] flex items-center justify-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#F0B43A]" />
+                <div className="w-4 h-4 rounded-full border border-[#E3E6E1]/40 flex items-center justify-center">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#E3E6E1]" />
                 </div>
 
                 <span className="font-sans text-sm font-medium text-[#E3E6E1]">
@@ -161,7 +161,7 @@ export default function Home() {
               </span>
               <button
                 onClick={() => setIsGeneratorOpen(true)}
-                className="h-10 px-5 inline-flex items-center font-sans text-xs font-medium uppercase tracking-wider bg-[#F0B43A] hover:bg-[#E3E6E1] text-[#0A1411] rounded-full transition-colors cursor-pointer"
+                className="h-9 px-4 inline-flex items-center font-sans text-xs font-medium uppercase tracking-wider bg-[#E3E6E1] hover:bg-white text-[#0A1411] rounded-full transition-colors cursor-pointer"
               >
                 Inquire
               </button>
@@ -169,40 +169,47 @@ export default function Home() {
           </header>
 
           {/* HERO MAIN BODY */}
-          <section className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-12 md:px-16 flex-1 flex flex-col justify-center my-auto py-4">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-baseline">
-              
-              {/* Left Column: Calm Editorial Headline in Newsreader */}
-              <div className="md:col-span-7 flex flex-col items-start text-left">
-                <span className="font-meta text-[#8FA39B] text-xs uppercase tracking-wider mb-4 block">
-                  Digital studio & engineering
-                </span>
+          <section className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-12 md:px-16 flex-1 flex flex-col justify-between pt-8 pb-8">
+            
+            {/* Top/Mid: Headline */}
+            <div className="max-w-3xl pt-2 sm:pt-6">
+              <span className="font-meta text-[#8FA39B] text-xs uppercase tracking-wider mb-4 block">
+                Digital studio & engineering
+              </span>
 
-                <h1 className="font-serif text-3xl sm:text-5xl lg:text-[3.6rem] font-light leading-[1.08] tracking-[-0.02em] text-[#E3E6E1] max-w-[20ch]">
-                  We build web, AI and search systems.{' '}
-                  <span className="text-[#8FA39B]">Quietly, and properly.</span>
-                </h1>
+              <h1 className="font-serif text-3xl sm:text-5xl lg:text-[3.6rem] font-light leading-[1.08] tracking-[-0.02em] text-[#E3E6E1] max-w-[22ch]">
+                We build web, AI and search systems.{' '}
+                <span className="text-[#8FA39B]">Quietly, and properly.</span>
+              </h1>
+            </div>
+
+            {/* Bottom Row: Bottom-Right Studio Note & CTA */}
+            <div className="w-full flex flex-col sm:flex-row items-end justify-between gap-6 pt-12">
+              <div className="hidden sm:block">
+                <span className="font-serif font-light text-2xl text-[#E3E6E1]/20 tracking-tight">
+                  DreamFrame
+                </span>
               </div>
 
-              {/* Right Column: Studio note and primary CTA */}
-              <div className="md:col-span-5 flex flex-col items-start text-left md:pl-6 space-y-6">
-                <p className="font-body text-[#E3E6E1]/85 text-base sm:text-lg font-normal leading-relaxed max-w-[36ch]">
+              {/* Bottom Right Corner */}
+              <div className="flex flex-col items-start sm:items-end text-left sm:text-right max-w-[34ch] space-y-3">
+                <p className="font-body text-[#E3E6E1]/75 text-xs sm:text-[13px] font-normal leading-relaxed">
                   DreamFrame is an independent studio. We design high-conversion
                   websites, automate backend operations, and build search visibility
                   for brands that want to be remembered.
                 </p>
 
-                <div className="flex items-center gap-4 pt-2">
+                <div>
                   <button
                     onClick={() => setIsGeneratorOpen(true)}
-                    className="btn-saffron"
+                    className="h-9 px-4 inline-flex items-center justify-center font-sans text-xs font-medium text-[#0A1411] bg-[#E3E6E1] hover:bg-white rounded-full transition-all duration-200 cursor-pointer shadow-sm"
                   >
                     Start a project
                   </button>
                 </div>
               </div>
-
             </div>
+
           </section>
 
           {/* Over-scaled Brand Typography Bottom Wordmark */}
